@@ -10,7 +10,7 @@
         width: 100px !important;
         /* height: 55px !important; */
     }
-    
+
 </style>
 {% endblock %}
 {% block body %}
@@ -20,12 +20,15 @@
         <div class="my-4">
             <ul class="list-group" id="items">
             </ul>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb mt-3">
-                    <li class="breadcrumb-item active" aria-current="page">Your Cart Total Is <b>&#8377;<span
-                                id="totalPrice"></b> </span>Enter your details below & place your order. Thanks for
-                        using My Awesome Cart!</li>
-                </ol>
+                <br>
+                <ul class="list-group" id="items">
+                 <pre>   <li style="float: right;"  class="list-group-item"><b>Grand Total    <span class="btn btn-warning rounded-pill" id="qty">${qty}</span>  <span style="float: right;"  class ="btn btn-success custom2">&#8377;<span  id="totalPrice"></b> </span></span></li></pre>
+                </ul>
+                  <br>
+                  <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb mt-3">
+                <li>   Enter your details below & place your order. Thanks for using My Awesome Cart!</li>
+            </ol>
             </nav>
         </div>
     </div>
@@ -87,6 +90,8 @@
     // console.log(cart);
     var sum = 0;
     var totalPrice = 0;
+    var q = 0;
+  
     if ($.isEmptyObject(cart)) {
         //if object is empty
         mystr = `<p>Your cart is empty, please add some items to your cart before checking out!</p>`
@@ -97,17 +102,21 @@
             let qty = cart[item][0];
             let itemPrice = cart[item][2];
             sum = sum + qty;
-            totalPrice = totalPrice + qty * itemPrice
+            totalPrice = totalPrice + qty * itemPrice;
+            q = qty + q;
+            document.getElementById('qty').innerHTML = q;
             mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">
              <span class="custom">${name}</span> 
-             <span class="btn btn-warning rounded-circle">${qty}</span>      
+             <span class="btn btn-warning rounded-pill">${qty}</span>      
              <span class="btn btn-danger custom2">&#8377;${itemPrice} </span> 
                </li>`
             $('#items').append(mystr);
         }
+        
     }
     document.getElementById('cart').innerHTML = sum;
     document.getElementById('totalPrice').innerHTML = totalPrice;
+   
     $('#itemsJson').val(JSON.stringify(cart));
 
     {% if thank %}
@@ -117,5 +126,6 @@
     {% endif %}
 
     $('#amount').val($('#totalPrice').html())
+    $('#amount').val($('#qty').html())
 </script>
 {% endblock %}
