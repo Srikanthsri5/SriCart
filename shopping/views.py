@@ -38,7 +38,7 @@ def search(request):
         if len(prod) !=0:
             allProds.append([prod, range(1, nSlides), nSlides])
     params = {'allProds':allProds}
-    if len(allProds) == 0 or len(query)<4:
+    if len(allProds) == 0 or len(query)<3:
         params= {'msg': "No search results found"}
     return render(request, 'shopping/index.html', params)
 
